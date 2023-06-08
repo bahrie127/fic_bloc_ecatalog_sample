@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_ecatalog/bloc/bloc/register_bloc.dart';
+
 import 'package:flutter_ecatalog/data/models/request/register_request_model.dart';
 import 'package:flutter_ecatalog/presentation/login_page.dart';
+
+import '../bloc/register/register_bloc.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -103,6 +105,17 @@ class _RegisterPageState extends State<RegisterPage> {
                 }
               },
             ),
+            const SizedBox(
+              height: 16,
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (_) {
+                  return const LoginPage();
+                }));
+              },
+              child: const Text('Sudah punya akun? Login'),
+            )
             // BlocListener<RegisterBloc, RegisterState>(
             //   listener: (context, state) {
             //     if (state is RegisterError) {
