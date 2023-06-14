@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecatalog/bloc/add_product/add_product_bloc.dart';
@@ -10,7 +11,7 @@ import 'package:flutter_ecatalog/presentation/register_page.dart';
 import 'bloc/login/login_bloc.dart';
 import 'bloc/register/register_bloc.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
 }
 
