@@ -6,6 +6,7 @@ import 'package:flutter_ecatalog/data/datasources/local_datasource.dart';
 import 'package:flutter_ecatalog/data/models/request/product_request_model.dart';
 import 'package:flutter_ecatalog/presentation/add_product_page.dart';
 import 'package:flutter_ecatalog/presentation/login_page.dart';
+import 'package:flutter_ecatalog/themes/app_theme.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -48,6 +49,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home Page'),
+        backgroundColor: context.theme.appColors.primary,
         elevation: 5,
         actions: [
           IconButton(
@@ -100,6 +102,7 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: context.theme.appColors.primary,
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (_) {
             return const AddProductPage();

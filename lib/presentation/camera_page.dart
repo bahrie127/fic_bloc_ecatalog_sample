@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ecatalog/themes/app_theme.dart';
 
 // Future<void> main() async {
 //   WidgetsFlutterBinding.ensureInitialized();
@@ -96,7 +97,8 @@ class _CameraAppState extends State<CameraPage> {
                   padding: const EdgeInsets.only(bottom: 20, right: 20),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.deepPurple),
+                      backgroundColor: context.theme.appColors.primary,
+                    ),
                     onPressed: () {
                       takePicture();
                     },

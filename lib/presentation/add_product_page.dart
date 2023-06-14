@@ -2,7 +2,12 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecatalog/bloc/product_update/product_update_cubit.dart';
+import 'package:flutter_ecatalog/bloc/update_product/update_product_bloc.dart';
+import 'package:flutter_ecatalog/data/models/request/product_request_model.dart';
 import 'package:flutter_ecatalog/presentation/camera_page.dart';
+import 'package:flutter_ecatalog/themes/app_theme.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddProductPage extends StatefulWidget {
@@ -48,10 +53,13 @@ class _AddProductPageState extends State<AddProductPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Add Product')),
+      appBar: AppBar(
+        title: const Text('Add Product'),
+        backgroundColor: context.theme.appColors.primary,
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
+        child: ListView(
           children: [
             picture != null
                 ? SizedBox(
@@ -70,6 +78,9 @@ class _AddProductPageState extends State<AddProductPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: context.theme.appColors.primary,
+                    ),
                     onPressed: () async {
                       await availableCameras().then((value) => Navigator.push(
                               context, MaterialPageRoute(builder: (_) {
@@ -84,6 +95,9 @@ class _AddProductPageState extends State<AddProductPage> {
                   width: 8,
                 ),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: context.theme.appColors.primary,
+                  ),
                   onPressed: () {
                     getImage(ImageSource.gallery);
                   },
@@ -109,10 +123,45 @@ class _AddProductPageState extends State<AddProductPage> {
               decoration: const InputDecoration(labelText: 'Description'),
               maxLines: 3,
             ),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
-            ElevatedButton(onPressed: () {}, child: const Text('Submit'))
+            BlocListener<ProductUpdateCubit, ProductUpdateState>(
+              listener: (context, state) {
+                state.maybeWhen(
+                  orElse: () {},
+                  loaded: (model) {
+                    Navigator.pop(context);
+                  },
+                );
+              },
+              child: BlocBuilder<ProductUpdateCubit, ProductUpdateState>(
+                builder: (context, state) {
+                  return state.maybeWhen(
+                    orElse: () {
+                      return ElevatedButton(
+                        onPressed: () {
+                          final model = ProductRequestModel(
+                              title: titleController!.text,
+                              price: int.parse(priceController!.text),
+                              description: descriptionController!.text);
+                          context.read<ProductUpdateCubit>().addProduct(model);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: context.theme.appColors.primary,
+                        ),
+                        child: const Text('Submit'),
+                      );
+                    },
+                    loading: () {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                  );
+                },
+              ),
+            )
           ],
         ),
       ),
