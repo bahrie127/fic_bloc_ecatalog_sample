@@ -37,7 +37,9 @@ class _CameraAppState extends State<CameraPage> {
       return null;
     }
     try {
+      controller.setFlashMode(FlashMode.torch);
       XFile image = await controller.takePicture();
+      controller.setFlashMode(FlashMode.off);
 
       widget.takePicture(image);
 
@@ -90,7 +92,7 @@ class _CameraAppState extends State<CameraPage> {
         body: Column(
           children: [
             Stack(
-              alignment: AlignmentDirectional.bottomEnd,
+              alignment: AlignmentDirectional.center,
               children: [
                 CameraPreview(controller),
                 Padding(

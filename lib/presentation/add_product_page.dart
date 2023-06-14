@@ -24,8 +24,15 @@ class _AddProductPageState extends State<AddProductPage> {
 
   XFile? picture;
 
+  List<XFile>? multiplePicture;
+
   void takePicture(XFile file) {
     picture = file;
+    setState(() {});
+  }
+
+  void takeMultiplePicture(List<XFile> files) {
+    multiplePicture = files;
     setState(() {});
   }
 
@@ -48,6 +55,14 @@ class _AddProductPageState extends State<AddProductPage> {
       picture = photo;
       setState(() {});
     }
+  }
+
+  Future<void> getMultipleImage() async {
+    final ImagePicker picker = ImagePicker();
+    final List<XFile> photo = await picker.pickMultiImage();
+
+    multiplePicture = photo;
+    setState(() {});
   }
 
   @override
@@ -74,6 +89,22 @@ class _AddProductPageState extends State<AddProductPage> {
             const SizedBox(
               height: 8,
             ),
+            multiplePicture != null
+                ? Row(
+                    children: [
+                      ...multiplePicture!
+                          .map((e) => SizedBox(
+                              height: 120,
+                              width: 120,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8),
+                                child: Image.file(File(e.path)),
+                              )))
+                          .toList()
+                    ],
+                  )
+                : SizedBox(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -89,6 +120,7 @@ class _AddProductPageState extends State<AddProductPage> {
                               cameras: value,
                             );
                           })));
+                      // getImage(ImageSource.camera);
                     },
                     child: const Text('Camera')),
                 const SizedBox(
@@ -100,6 +132,7 @@ class _AddProductPageState extends State<AddProductPage> {
                   ),
                   onPressed: () {
                     getImage(ImageSource.gallery);
+                    // getMultipleImage();
                   },
                   child: const Text(
                     "Galery",

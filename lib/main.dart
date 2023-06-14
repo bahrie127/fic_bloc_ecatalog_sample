@@ -40,7 +40,6 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => UpdateProductBloc(ProductDataSource()),
         ),
-
         BlocProvider(
           create: (context) => ProductUpdateCubit(ProductDataSource()),
         ),
@@ -49,7 +48,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,
-        themeMode: ThemeMode.light,
+        themeMode: ThemeMode.dark,
         home: const LoginPage(),
       ),
     );
