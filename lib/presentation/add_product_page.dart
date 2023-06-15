@@ -164,6 +164,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 state.maybeWhen(
                   orElse: () {},
                   loaded: (model) {
+                    debugPrint(model.toString());
                     Navigator.pop(context);
                   },
                 );
@@ -178,7 +179,10 @@ class _AddProductPageState extends State<AddProductPage> {
                               title: titleController!.text,
                               price: int.parse(priceController!.text),
                               description: descriptionController!.text);
-                          context.read<ProductUpdateCubit>().addProduct(model);
+                          context.read<ProductUpdateCubit>().addProduct(
+                                model,
+                                picture!,
+                              );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: context.theme.appColors.primary,

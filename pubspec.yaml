@@ -19,6 +19,7 @@ dependencies:
   freezed_annotation: ^2.2.0
   http: ^1.0.0
   image_picker: ^0.8.8
+  json_annotation: ^4.8.1
   shared_preferences: ^2.1.1
 
 dev_dependencies:
@@ -27,6 +28,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   freezed: ^2.3.5
+  json_serializable: ^6.7.0
 
 flutter:
   uses-material-design: true

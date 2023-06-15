@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter_ecatalog/data/models/request/product_request_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'package:flutter_ecatalog/data/datasources/product_datasource.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../data/models/response/product_response_model.dart';
 
@@ -15,12 +18,27 @@ class ProductUpdateCubit extends Cubit<ProductUpdateState> {
     this.dataSource,
   ) : super(const ProductUpdateState.initial());
 
-  void addProduct(ProductRequestModel model) async {
+  void addProduct(ProductRequestModel model, XFile image) async {
     emit(const _Loading());
-    final result = await dataSource.createProduct(model);
-    result.fold(
+    final uploadResult = await dataSource.uploadImage(image);
+    uploadResult.fold(
       (l) => emit(_Error(l)),
-      (r) => emit(_Loaded(r)),
+      (dataUpload) async {
+        final result = await dataSource.createProduct(model.copyWith(
+          images: [
+            dataUpload.location,
+          ],
+        ));
+        result.fold(
+          (l) => emit(_Error(l)),
+          (r) => emit(_Loaded(r)),
+        );
+      },
     );
+    // final result = await dataSource.createProduct(model);
+    // result.fold(
+    //   (l) => emit(_Error(l)),
+    //   (r) => emit(_Loaded(r)),
+    // );
   }
 }

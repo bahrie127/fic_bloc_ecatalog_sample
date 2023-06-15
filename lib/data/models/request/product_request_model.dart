@@ -2,7 +2,6 @@
 //
 //     final productRequestModel = productRequestModelFromMap(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 class ProductRequestModel {
@@ -41,4 +40,20 @@ class ProductRequestModel {
         "categoryId": categoryId,
         "images": List<dynamic>.from(images.map((x) => x)),
       };
+
+  ProductRequestModel copyWith({
+    String? title,
+    int? price,
+    String? description,
+    int? categoryId,
+    List<String>? images,
+  }) {
+    return ProductRequestModel(
+      title: title ?? this.title,
+      price: price ?? this.price,
+      description: description ?? this.description,
+      categoryId: categoryId ?? this.categoryId,
+      images: images ?? this.images,
+    );
+  }
 }
