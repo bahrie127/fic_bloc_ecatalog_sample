@@ -1,6 +1,5 @@
 part of 'products_bloc.dart';
 
-@immutable
 abstract class ProductsState extends Equatable {}
 
 class ProductsInitial extends ProductsState {

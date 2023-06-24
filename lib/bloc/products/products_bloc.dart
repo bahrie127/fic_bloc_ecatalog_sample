@@ -1,6 +1,7 @@
-import 'package:bloc/bloc.dart';
+
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 
 import 'package:flutter_ecatalog/data/datasources/product_datasource.dart';
 import 'package:flutter_ecatalog/data/models/response/product_response_model.dart';
